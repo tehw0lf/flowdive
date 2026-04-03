@@ -1,0 +1,28 @@
+name: build pipeline
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+
+jobs:
+    build:
+        name: external workflow
+        uses: tehw0lf/workflows/.github/workflows/build-test-publish.yml@main
+        permissions:
+            actions: write
+            attestations: write
+            contents: write
+            packages: write
+            id-token: write
+            security-events: write
+        with:
+            tool: "npm"
+            lint: "run lint"
+            test: "run test"
+            build_branch: "run build"
+            build_main: "run build"
+            artifact_path: "dist"
+            docker_meta: "[{\"name\":\"flowdive\",\"file\":\"Dockerfile\"}]"
+            npm_audit_omit_dev: true
