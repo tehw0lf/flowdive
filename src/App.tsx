@@ -159,10 +159,19 @@ export default function App() {
     setTimeout(() => {
       const { level } = drillState;
 
-      if (level === 'orchestrator') {
+      if (level === 'orchestrator' && 'calledWorkflows' in item) {
         const orc = item as OrchestratorData;
         setDrillState({ level: 'job', orchestratorId: orc.id, clickOrigin: origin });
         setBreadcrumb([{ level: 'orchestrator', label: orc.name ?? orc.filename, orchestratorId: orc.id }]);
+        setPopup(null);
+      } else if (level === 'orchestrator' && 'uses' in item) {
+        // JobData passed from popup "Calls" link — drill directly into the reusable workflow
+        const job = item as JobData;
+        const resolved = job.uses ? resolveUsesRef(job.uses, workflows) : null;
+        if (resolved) {
+          setDrillState(prev => ({ ...prev, level: 'job', workflowId: resolved.id, jobId: undefined, clickOrigin: origin }));
+          setBreadcrumb(prev => [...prev, { level: 'job', label: job.name ?? job.id, jobId: job.id, workflowId: resolved.id }]);
+        }
         setPopup(null);
       } else if (level === 'workflow') {
         const wf = item as WorkflowData;
