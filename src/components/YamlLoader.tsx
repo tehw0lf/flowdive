@@ -161,7 +161,7 @@ async function readDropItems(dataTransfer: DataTransfer): Promise<{ name: string
 
 // ─── GitHub API helpers ───────────────────────────────────────────────────────
 
-interface GhFile { name: string; download_url: string; type: string; }
+interface GhFile { name: string; download_url: string | null; url: string; type: string; }
 
 async function fetchWorkflowsFromGitHub(
   repo: string,
@@ -185,7 +185,15 @@ async function fetchWorkflowsFromGitHub(
 
   const contents = await Promise.all(
     yamlFiles.map(async f => {
-      const r = await fetch(f.download_url, token ? { headers } : {});
+      // download_url for private repos includes a signed token, so no Auth header needed.
+      // download_url is null only in rare edge cases; fall back to API url + base64 decode.
+      if (!f.download_url) {
+        const r = await fetch(f.url, { headers });
+        if (!r.ok) throw new Error(`Failed to fetch ${f.name}: ${r.status}`);
+        const data = await r.json();
+        return { name: f.name, content: atob(data.content.replace(/\n/g, '')) };
+      }
+      const r = await fetch(f.download_url);
       return { name: f.name, content: await r.text() };
     })
   );
