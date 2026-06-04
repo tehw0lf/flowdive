@@ -1,0 +1,18 @@
+name: weekly dast scan
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+jobs:
+  dast:
+    name: external workflow
+    uses: tehw0lf/workflows/.github/workflows/security-scan-dast.yml@main
+    permissions:
+      contents: read
+      issues: write
+      security-events: write
+    with:
+      target_url: "https://flowdive.tehwolf.de"
+      scan_type: "baseline"
