@@ -221,6 +221,7 @@ export function YamlLoader({ onLoad }: YamlLoaderProps) {
 
   // Paste tab state
   const [pasteValue, setPasteValue] = useState('');
+  const [pasteFilename, setPasteFilename] = useState('');
 
   const handleParsed = useCallback((files: { name: string; content: string }[]) => {
     if (files.length === 0) return;
@@ -266,8 +267,10 @@ export function YamlLoader({ onLoad }: YamlLoaderProps) {
 
   const handlePaste = () => {
     if (!pasteValue.trim()) return;
-    handleParsed([{ name: `pasted-${Date.now()}.yml`, content: pasteValue }]);
+    const name = pasteFilename.trim() || `pasted-${Date.now()}.yml`;
+    handleParsed([{ name, content: pasteValue }]);
     setPasteValue('');
+    setPasteFilename('');
   };
 
   const tabClass = (t: Tab) =>
@@ -404,6 +407,14 @@ export function YamlLoader({ onLoad }: YamlLoaderProps) {
           {/* Paste tab */}
           {tab === 'paste' && (
             <div className="p-4">
+              <input
+                type="text"
+                value={pasteFilename}
+                onChange={e => setPasteFilename(e.target.value)}
+                placeholder="filename.yml (optional)"
+                aria-label="Filename for pasted YAML"
+                className="w-full bg-black/40 border border-blue-500/20 rounded px-3 py-1.5 text-xs font-mono text-gray-300 placeholder-gray-600 focus:outline-none focus:border-blue-400/40 mb-2"
+              />
               <textarea
                 value={pasteValue}
                 onChange={e => setPasteValue(e.target.value)}
