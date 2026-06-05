@@ -22,8 +22,9 @@ jobs:
             tool: "npm"
             lint: "run lint"
             test: "run test"
+            e2e: "run test:e2e"
             build_branch: "run build"
             build_main: "run build"
             artifact_path: "dist"
-            docker_meta: "[{\"name\":\"flowdive\",\"file\":\"Dockerfile\"}]"
+            docker_meta: '[{"name":"flowdive","file":"Dockerfile"}]'
             npm_audit_omit_dev: true
