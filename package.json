@@ -2,7 +2,7 @@
   "name": "flowdive",
   "description": "Dive into your GitHub Actions workflows \u2014 interactive visualization with drill-down navigation and graph view.",
   "private": true,
-  "version": "1.0.7",
+  "version": "1.0.8",
   "type": "module",
   "scripts": {
     "dev": "vite",
