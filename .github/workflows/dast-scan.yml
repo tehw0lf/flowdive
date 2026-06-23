@@ -16,3 +16,4 @@ jobs:
     with:
       target_url: "https://flowdive.tehwolf.de"
       scan_type: "baseline"
+      rules_file: ".zap/rules.tsv"
