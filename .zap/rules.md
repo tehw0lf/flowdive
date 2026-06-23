@@ -10,3 +10,4 @@ Rules suppressed in `.zap/rules.tsv` with justification:
 | 10015 | Re-examine Cache-control Directives | Informational finding about cache headers. Not a vulnerability. |
 | 10049 | Storable and Cacheable Content | Informational finding. Static assets are intentionally cacheable. |
 | 10096 | Timestamp Disclosure - Unix | Build timestamps embedded in JS bundles by the build tool. Not sensitive data. |
+| 10050 | Retrieved from Cache | Cloudflare CDN caching behavior. Not a vulnerability. |
