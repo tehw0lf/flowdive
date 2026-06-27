@@ -15,6 +15,6 @@ jobs:
     with:
       target_url: "https://flowdive.tehwolf.de"
       min_performance: 70
-      min_accessibility: 95
+      min_accessibility: 100
       min_best_practices: 100
-      min_seo: 80
+      min_seo: 100
