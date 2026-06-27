@@ -260,16 +260,16 @@ export default function App() {
 
   if (!loaded) {
     return (
-      <div className="relative min-h-screen bg-[#020408]">
+      <main className="relative min-h-screen bg-[#020408]">
         <ParticleBackground />
         <div className="grid-bg fixed inset-0 pointer-events-none z-0" />
         <YamlLoader onLoad={handleLoad} />
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-[#020408] text-white">
+    <main className="relative min-h-screen bg-[#020408] text-white">
       <ParticleBackground />
       <div className="grid-bg fixed inset-0 pointer-events-none z-0" />
 
@@ -450,6 +450,6 @@ export default function App() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
